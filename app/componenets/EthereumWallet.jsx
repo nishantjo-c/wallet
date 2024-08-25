@@ -6,7 +6,13 @@ export default function EthereumWallet({mnemonic}) {
 
   const [currentIndex,setCurrentIndex] = useState(0);
   const [addresses, setAddresses] = useState([]);
-  const [toggle, setToggle] = useState(0);
+  const [visibility, setVisibility] = useState([]);
+
+  function toggleVisibility(index){
+    const visibilityArr = [...visibility];
+    visibilityArr[index] = !visibilityArr[index];
+    setVisibility([...visibilityArr]);
+  }
   
   return <>
     <button onClick={async () => {
@@ -18,6 +24,7 @@ export default function EthereumWallet({mnemonic}) {
       const wallet = new Wallet(privateKey);
       setCurrentIndex(currentIndex + 1);
       setAddresses([...addresses,{pub: wallet.address, pvt: wallet.privateKey}]);
+      setVisibility([...visibility,false])
 
     }}>
       Add a new Eth wallet
@@ -25,8 +32,8 @@ export default function EthereumWallet({mnemonic}) {
     {addresses.map((key,index) => 
       <>
         <h4>{key.pub}</h4>
-        <button onClick={() => toggle === 0 ? setToggle(1) : setToggle(0)}>show private key</button>
-        <h4 style={toggle === 0 ? {visibility: "hidden"}: {visibility: "visible"} }>{key.pvt}</h4>
+        <button onClick={() => toggleVisibility(index)}>show private key</button>
+        <h4 style={visibility[index] ? {visibility: "visible"} : {visibility: "hidden"} }>{key.pvt}</h4>
       </>
     )}
   </>

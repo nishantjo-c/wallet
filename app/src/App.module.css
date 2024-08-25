@@ -1,0 +1,23 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  border: 1px solid black;
+  margin: 5rem 25rem 0 25rem;
+  padding: 10rem 0 10rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: .5rem;
+  gap: 1rem;
+}
+
+.btn {
+  padding: .25rem;
+}
+
+.lnk {
+  text-decoration: none;
+}

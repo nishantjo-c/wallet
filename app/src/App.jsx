@@ -1,24 +1,17 @@
-import './App.css';
-import { generateMnemonic } from "bip39";
-import { useState } from 'react';
-import SolanaWallet from "../componenets/SolanaWallet.jsx";
-import EthereumWallet from '../componenets/EthereumWallet.jsx';
+import appcss from './App.module.css';
+import { Outlet, Link } from "react-router-dom";
 
 function App() {
-  const [mnemonic, setMnemonic] = useState("");
+  
 
   return (
-    <>
-      <button onClick={() => {
-        const mn = generateMnemonic();
-        setMnemonic(mn);
-      }}>
-        Create Seed Phrase
-      </button>
-      <h3>{mnemonic}</h3>
-      <SolanaWallet mneomonic={mnemonic} />
-      <EthereumWallet mnemonic={mnemonic} />
-    </>
+    <div className={appcss.page}>
+      <h1>Wallet</h1>
+      <div className={appcss.container}>
+        <Link to={`create-new`} className={appcss.lnk}><button className={appcss.btn}>Create a new wallet</button></Link>
+        <Link to={`existing`} className={appcss.lnk}><button className={appcss.btn}>Import existing wallet</button></Link>
+      </div>
+    </div>
   )
 }
 

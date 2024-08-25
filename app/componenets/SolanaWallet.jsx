@@ -8,7 +8,13 @@ export default function SolanaWallet({mneomonic}) {
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [publicKeys, setPublicKeys] = useState([]);
-  const [toggle, setToggle] = useState(0);
+  const [visibility, setVisibility] = useState([]);
+
+  function toggleVisibility(index){
+    const visibilityArr = [...visibility];
+    visibilityArr[index] = !visibilityArr[index];
+    setVisibility([...visibilityArr]);
+  }
 
   return <div>
     <button onClick={() => {
@@ -19,14 +25,15 @@ export default function SolanaWallet({mneomonic}) {
       const keypair = Keypair.fromSecretKey(secret);
       setCurrentIndex(currentIndex + 1);
       setPublicKeys([...publicKeys, {pub: keypair.publicKey, pvt: keypair.secretKey}]);
+      setVisibility([...visibility, false]);
     }}>
       Add a new SOL wallet
     </button>
     {publicKeys.map((key,index) => 
       <>
         <h4 key={index}>{key.pub.toBase58()}</h4>
-        <button onClick={() => toggle === 0 ? setToggle(1) : setToggle(0)}>show private key</button>
-        <h4 style={toggle === 0 ? {visibility: "hidden"}: {visibility: "visible"} }>{key.pvt}</h4>
+        <button onClick={() => toggleVisibility(index)}>show private key</button>
+        <h4 style={visibility[index] ? {visibility: "visible"} : {visibility: "hidden"} }>{key.pvt}</h4>
       </>
     )}
   </div>
